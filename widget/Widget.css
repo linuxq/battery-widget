@@ -1,0 +1,15 @@
+.dashboard {
+	background: rgba(0,0,0,1);
+}
+.dashContainer {
+	border-right: 1px solid #111;
+}
+.dashContainerEnd {
+	
+}
+.dashValue {
+	font-size: 26px;
+}
+.dashLabel {
+	font-size: 12px;
+}

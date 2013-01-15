@@ -1,0 +1,20 @@
+.main {
+	background: #DDD;
+}
+.text {
+	font-size: 16px;
+	margin: 10px;
+}
+.btnLoadWidget {
+	margin: 0px -5px -3px -5px;
+	padding: 7px 0px 10px 0px;
+}
+.bufferH {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.config-label {
+	color: rgb(31,117,191);
+	font-size: 18px;
+	
+}

@@ -1,0 +1,12 @@
+{
+  "id": "com.palm.app.batterywidget",
+  "version": "0.9.1",
+  "vendor": "Choorp Studios",
+  "type": "web",
+  "main": "index.html",
+  "title": "Battery Widget",
+  "icon": "icon-64.png",
+  "miniicon": "icon-mini.png",
+  "splashBackground": "images/splash-background.png",
+  "uiRevision": "2"
+}

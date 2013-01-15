@@ -1,0 +1,10 @@
+{
+  "id": "com.palm.app.batterywidget",
+  "version": "0.9.0",
+  "vendor": "Garrett92C",
+  "type": "web",
+  "main": "index.html",
+  "title": "Battery Widget",
+  "miniicon": "icon-mini.png",
+  "uiRevision": "2"
+}
