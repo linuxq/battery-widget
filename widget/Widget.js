@@ -15,32 +15,34 @@
  */
 enyo.kind({
 	name: "BatteryWidgetDash",
-	kind: "HFlexBox",
+	kind: "VFlexBox",
 	className: "dashboard",
 	style: "color: #FFF;",
-	published: {
-		
-	},
 	components: [
-		{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", pack:"middle",components: [
-			{name: "txtPercent", className: "dashValue", style: "", flex: 1, content: "00"},
-			{name: "lblPercent", className: "dashLabel", content: "Percent"},
+		{style: "padding: 3px; height: 52px; width: 100%;", components: [
+			{name: "batteryBar", style: "height: 46px; width: 50%; background: #006600;"}
 		]},
-		{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", components: [
-			{name: "txtCurrent", className: "dashValue", flex: 1, content: "00"},
-			{name: "lblCurrent", className: "dashLabel", content: "Current"},
-		]},
-		{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", components: [
-			{name: "txtTemp", className: "dashValue", flex: 1, content: "00"},
-			{name: "lblTemp", className: "dashLabel", content: "Celsius"},
-		]},
-		{kind: "VFlexBox", className: "dashContainerEnd", flex: 1, align: "center", onclick: "setStyles", components: [
-			{name: "txtVolts", className: "dashValue", flex: 1, content: "00"},
-			{name: "lblVolts", className: "dashLabel", content: "Volts"},
+		{kind: "HFlexBox", className: "overlay", components: [
+			{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", pack:"middle",components: [
+				{name: "txtPercent", className: "dashValue", style: "", flex: 1, content: "00"},
+				{name: "lblPercent", className: "dashLabel", content: "Percent"}
+			]},
+			{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", components: [
+				{name: "txtCurrent", className: "dashValue", flex: 1, content: "00"},
+				{name: "lblCurrent", className: "dashLabel", content: "Current"}
+			]},
+			{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", components: [
+				{name: "txtTemp", className: "dashValue", flex: 1, content: "00"},
+				{name: "lblTemp", className: "dashLabel", content: "Celsius"}
+			]},
+			{kind: "VFlexBox", className: "dashContainerEnd", flex: 1, align: "center", onclick: "setStyles", components: [
+				{name: "txtVolts", className: "dashValue", flex: 1, content: "00"},
+				{name: "lblVolts", className: "dashLabel", content: "Volts"}
+			]}
 		]},
 		{kind: "ApplicationEvents", onWindowActivated: "dashOpened", onWindowDeactivated: "dashClosed", onWindowParamsChange: "handleWindowParams", onUnload: "dashExited"},
 		{name: "screenState", kind: "enyo.PalmService", service: "palm://com.palm.display/control", method: "status", subscribe: true, onSuccess: "displayUpdate"},
-		{name: "batteryService", kind: "PalmService", service: "palm://de.somline.drbattery", method: "ReadBatteryShort", onSuccess: "gotBattStats"},
+		{name: "batteryService", kind: "PalmService", service: "palm://de.somline.drbattery", method: "ReadBatteryShort", onSuccess: "gotBattStats"}
 	],
 	create: function () {
 		this.inherited(arguments);
@@ -86,6 +88,10 @@ enyo.kind({
 		if(style.clrB==undefined)
 			style.clrB = "000000";
 		enyo.$.batteryWidgetDash.addStyles("background: #" + style.clrB + ";");
+
+		if(style.clrBar==undefined)
+			style.clrBar = "006600";
+		this.$.batteryBar.addStyles("background: #" + style.clrBar + ";");
 		
 		if(style.sizeV==undefined)
 			style.sizeV = 26;
@@ -108,6 +114,7 @@ enyo.kind({
 		if (inResponse.getpercent != undefined) {
 			var batteryLevel = inResponse.getpercent;
 			this.$.txtPercent.setContent(batteryLevel);
+			this.$.batteryBar.applyStyle("width", batteryLevel + "%");
 		}
 		else {
 			this.$.txtPercent.setContent("?");

@@ -28,38 +28,41 @@ enyo.kind({
 				{className: "text", content: "Use these settings to customize the battery widget."},
 				{kind: "Divider", caption: "Colors"},
 				{name: "inputClrV", kind: "Input", style: "color: #007;", value: "FFFFFF", selectAllOnFocus:true, spellcheck:false, autocorrect:false, components: [
-					{style: "color: rgb(31,117,191);", content: "Values"},
+					{style: "color: rgb(31,117,191);", content: "Values"}
 				]},
 				{name: "inputClrL", kind: "Input", style: "color: #007;", value: "FFFFFF", selectAllOnFocus:true, spellcheck:false, autocorrect:false, components: [
-					{style: "color: rgb(31,117,191);", content: "Labels"},
+					{style: "color: rgb(31,117,191);", content: "Labels"}
 				]},
 				{name: "inputClrB", kind: "Input", style: "color: #007;", value: "000000", selectAllOnFocus:true, spellcheck:false, autocorrect:false, components: [
-					{style: "color: rgb(31,117,191);", content: "Background"},
+					{style: "color: rgb(31,117,191);", content: "Background"}
+				]},
+				{name: "inputClrBar", kind: "Input", style: "color: #007;", value: "006600", selectAllOnFocus:true, spellcheck:false, autocorrect:false, components: [
+					{style: "color: rgb(31,117,191);", content: "Battery Bar"}
 				]},
 				{kind: "Divider", caption: "Font Size"},
 				{kind: "HFlexBox", style: "padding: 0 10px 0 10px;", align: "center", components: [
 					{name: "displaySizeV", content: "26"},
 					{name: "inputSizeV", kind: "Slider", className: "bufferH", flex:1, minimum: 20, maximum: 40, position: 26, onChanging: "updateDisplayV"},
-					{className: "config-label", content: "Values"},
+					{className: "config-label", content: "Values"}
 				]},
 				{kind: "HFlexBox", style: "padding: 0 10px 0 10px;", align: "center", components: [
 					{name: "displaySizeL", content: "12"},
 					{name: "inputSizeL", kind: "Slider", className: "bufferH", flex:1, minimum: 10, maximum: 20, position: 12, onChanging: "updateDisplayL"},
-					{className: "config-label", content: "Labels"},
-				]},
+					{className: "config-label", content: "Labels"}
+				]}
 			]},
-			{className: "text", content: "This card does not need to be open for the widget to work."},
+			{className: "text", content: "This card does not need to be open for the widget to work."}
 		]},
 		{name: "openWidget", kind: "Button", caption: "Load Widget", className: "enyo-button-affirmative btnLoadWidget", onclick: "loadWidget"},
 		{kind: "ApplicationEvents", onLoad: "loadValues", onUnload: "saveValues"},
 		{kind: "AppMenu", components: [
-			{caption: "Contact", onclick: "openContact"},
+			{caption: "Contact", onclick: "openContact"}
 		]},
 		{name: "popupContact", kind: "Popup", components: [
 			{content: "Twitter: @Choorp"},
 			{content: "Email: Garrett92C@gmail.com"},
-			{kind: "Button", caption: "Close", onclick: "closeContact"},
-		]},
+			{kind: "Button", caption: "Close", onclick: "closeContact"}
+		]}
 	],
 	create: function () {
 		this.inherited(arguments);
@@ -69,9 +72,10 @@ enyo.kind({
 			colorV: this.$.inputClrV.getValue(),
 			colorL: this.$.inputClrL.getValue(),
 			colorB: this.$.inputClrB.getValue(),
+			colorBar: this.$.inputClrBar.getValue(),
 			sizeV: this.$.inputSizeV.getPosition(),
-			sizeL: this.$.inputSizeL.getPosition(),
-		}
+			sizeL: this.$.inputSizeL.getPosition()
+		};
 		enyo.setCookie("appPrefs", enyo.json.stringify(enyo.application.appPrefs));
 	},
 	loadValues: function() {
@@ -79,9 +83,10 @@ enyo.kind({
 			colorV: "FFFFFF",
 			colorL: "FFFFFF",
 			colorB: "000000",
+			colorBar: "006600",
 			sizeV: 26,
-			sizeL: 12,
-		}
+			sizeL: 12
+		};
 		var cookie = enyo.getCookie("appPrefs");
 		if(cookie) {
 			enyo.application.appPrefs = enyo.mixin(enyo.application.appPrefs, enyo.json.parse(cookie));
@@ -91,6 +96,7 @@ enyo.kind({
 		this.$.inputClrV.setValue(config.colorV);
 		this.$.inputClrL.setValue(config.colorL);
 		this.$.inputClrB.setValue(config.colorB);
+		this.$.inputClrBar.setValue(config.colorBar);
 		this.$.inputSizeV.setPosition(config.sizeV);
 		this.$.displaySizeV.setContent(config.sizeV);
 		this.$.inputSizeL.setPosition(config.sizeL);
@@ -116,9 +122,10 @@ enyo.kind({
 			clrV: this.$.inputClrV.getValue(),
 			clrL: this.$.inputClrL.getValue(),
 			clrB: this.$.inputClrB.getValue(),
+			clrBar: this.$.inputClrBar.getValue(),
 			sizeV: this.$.inputSizeV.getPosition(),
-			sizeL: this.$.inputSizeL.getPosition(),
-		}
+			sizeL: this.$.inputSizeL.getPosition()
+		};
 		enyo.windows.openDashboard("widget/index.html", "batteryWidgetDash", {styles: settings}, {clickableWhenLocked:true});
-	},
+	}
 });

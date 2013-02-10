@@ -1,8 +1,8 @@
 .dashboard {
-	background: rgba(0,0,0,1);
+	background: rgba(0,110,0,1);
 }
 .dashContainer {
-	border-right: 1px solid #111;
+	border-right: 0px solid #111;
 }
 .dashContainerEnd {
 	
@@ -12,4 +12,21 @@
 }
 .dashLabel {
 	font-size: 12px;
+}
+
+.overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	color: #fff;
+	font-size: 48px;
+	padding: 3px;
+	/*background: rgba(255,0,0,.3);*/
+}
+
+.percentage {
+	font-size: 40px;
+	color: #fff;
 }

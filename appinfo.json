@@ -1,6 +1,6 @@
 {
   "id": "com.palm.app.batterywidget",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "vendor": "Choorp Studios",
   "type": "web",
   "main": "index.html",
