@@ -56,9 +56,17 @@ enyo.kind({
 	},
 	dashOpened: function() {
 		this.$.batteryService.call();
+		var time = enyo.windowParams.styles.interval || 10;
+		time = parseInt(time);
+		time = time * 60000;
+		this.timer = setInterval(function() {
+			enyo.log("setInterval: " + "fired");
+			this.$.batteryService.call();
+		}.bind(this), time);
 	},
 	dashClosed: function() {
 		this.dashStatus = "closed";
+		clearInterval(this.timer);
 	},
 	dashExited: function() {
 		this.$.screenState.destroy();
@@ -108,8 +116,7 @@ enyo.kind({
 		this.$.lblVolts.addStyles("font-size: " + style.sizeL + "px;");
 	},
 	gotBattStats: function(inSender, inResponse) {
-		/*var time = new Date();
-		this.$.txtTime.setContent(time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());*/
+		enyo.log("gotBattStats: " + "called");
 		
 		if (inResponse.getpercent != undefined) {
 			var batteryLevel = inResponse.getpercent;

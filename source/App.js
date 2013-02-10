@@ -49,6 +49,10 @@ enyo.kind({
 					{name: "displaySizeL", content: "12"},
 					{name: "inputSizeL", kind: "Slider", className: "bufferH", flex:1, minimum: 10, maximum: 20, position: 12, onChanging: "updateDisplayL"},
 					{className: "config-label", content: "Labels"}
+				]},
+				{kind: "Divider", caption: "Auto Refresh"},
+				{name: "inputInterval", kind: "Input", style: "color: #007;", value: "10", selectAllOnFocus:true, spellcheck:false, autocorrect:false, components: [
+					{style: "color: rgb(31,117,191);", content: "Frequency (mins)"}
 				]}
 			]},
 			{className: "text", content: "This card does not need to be open for the widget to work."}
@@ -74,7 +78,8 @@ enyo.kind({
 			colorB: this.$.inputClrB.getValue(),
 			colorBar: this.$.inputClrBar.getValue(),
 			sizeV: this.$.inputSizeV.getPosition(),
-			sizeL: this.$.inputSizeL.getPosition()
+			sizeL: this.$.inputSizeL.getPosition(),
+			interval: this.$.inputInterval.getValue()
 		};
 		enyo.setCookie("appPrefs", enyo.json.stringify(enyo.application.appPrefs));
 	},
@@ -85,7 +90,8 @@ enyo.kind({
 			colorB: "000000",
 			colorBar: "006600",
 			sizeV: 26,
-			sizeL: 12
+			sizeL: 12,
+			interval: 10
 		};
 		var cookie = enyo.getCookie("appPrefs");
 		if(cookie) {
@@ -101,6 +107,7 @@ enyo.kind({
 		this.$.displaySizeV.setContent(config.sizeV);
 		this.$.inputSizeL.setPosition(config.sizeL);
 		this.$.displaySizeL.setContent(config.sizeL);
+		this.$.inputInterval.setValue(config.interval);
 		
 	},
 	openContact: function() {
@@ -124,7 +131,8 @@ enyo.kind({
 			clrB: this.$.inputClrB.getValue(),
 			clrBar: this.$.inputClrBar.getValue(),
 			sizeV: this.$.inputSizeV.getPosition(),
-			sizeL: this.$.inputSizeL.getPosition()
+			sizeL: this.$.inputSizeL.getPosition(),
+			interval: this.$.inputInterval.getValue()
 		};
 		enyo.windows.openDashboard("widget/index.html", "batteryWidgetDash", {styles: settings}, {clickableWhenLocked:true});
 	}
