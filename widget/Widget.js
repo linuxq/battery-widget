@@ -29,7 +29,6 @@ enyo.kind({
 			]},
 			{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", components: [
 				{name: "txtPercentDrain", className: "dashValue", flex: 1, content: "00"},
-				//{name: "lblVolts", className: "dashLabel", content: "Volts"}
 				{name: "lblPercentDrain", className: "dashLabel", content: "%/h"}
 			]},			
 			{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", components: [
@@ -90,6 +89,7 @@ enyo.kind({
 		if(style.clrV==undefined)
 			style.clrV = "FFFFFF";
 		this.$.txtPercent.addStyles("color: #" + style.clrV + ";");
+		this.$.txtPercentDrain.addStyles("color: #" + style.clrV + ";");
 		this.$.txtCurrent.addStyles("color: #" + style.clrV + ";");
 		this.$.txtTemp.addStyles("color: #" + style.clrV + ";");
 		this.$.txtVolts.addStyles("color: #" + style.clrV + ";");
@@ -97,6 +97,7 @@ enyo.kind({
 		if(style.clrL==undefined)
 			style.clrL = "FFFFFF";
 		this.$.lblPercent.addStyles("color: #" + style.clrL + ";");
+		this.$.lblPercentDrain.addStyles("color: #" + style.clrL + ";");
 		this.$.lblCurrent.addStyles("color: #" + style.clrL + ";");
 		this.$.lblTemp.addStyles("color: #" + style.clrL + ";");
 		this.$.lblVolts.addStyles("color: #" + style.clrL + ";");
@@ -112,6 +113,7 @@ enyo.kind({
 		if(style.sizeV==undefined)
 			style.sizeV = 26;
 		this.$.txtPercent.addStyles("font-size: " + style.sizeV + "px;");
+		this.$.txtPercentDrain.addStyles("font-size: " + style.sizeV + "px;");
 		this.$.txtCurrent.addStyles("font-size: " + style.sizeV + "px;");
 		this.$.txtTemp.addStyles("font-size: " + style.sizeV + "px;");
 		this.$.txtVolts.addStyles("font-size: " + style.sizeV + "px;");
@@ -119,6 +121,7 @@ enyo.kind({
 		if(style.sizeL==undefined)
 			style.sizeL = 12;
 		this.$.lblPercent.addStyles("font-size: " + style.sizeL + "px;");
+		this.$.lblPercentDrain.addStyles("font-size: " + style.sizeL + "px;");
 		this.$.lblCurrent.addStyles("font-size: " + style.sizeL + "px;");
 		this.$.lblTemp.addStyles("font-size: " + style.sizeL + "px;");
 		this.$.lblVolts.addStyles("font-size: " + style.sizeL + "px;");
@@ -130,6 +133,29 @@ enyo.kind({
 			var batteryLevel = inResponse.getpercent;
 			this.$.txtPercent.setContent(batteryLevel);
 			this.$.batteryBar.applyStyle("width", batteryLevel + "%");
+						
+			if (batteryLevel >= 35)//green
+			{
+				 this.$.batteryBar.applyStyle("background", "#006600");
+			};			
+			
+			if ((batteryLevel < 35) & (batteryLevel >= 20))//yellow
+			{
+				 this.$.batteryBar.applyStyle("background", "#dddd00");
+			};
+
+			if ((batteryLevel < 20) & (batteryLevel >= 15))//orange
+			{
+				 this.$.batteryBar.applyStyle("background", "#ee5500");
+			};
+			
+			if (batteryLevel < 15)//red
+			{
+				 this.$.batteryBar.applyStyle("background", "#cc0000");
+			};			
+			
+			
+			
 			if (this.startBatteryLevel) {
 				var thisTime = (new Date()).getTime();
 				var durationSecs = (this.startTime - thisTime) / 1000;
