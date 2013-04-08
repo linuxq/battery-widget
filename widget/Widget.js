@@ -28,6 +28,11 @@ enyo.kind({
 				{name: "lblPercent", className: "dashLabel", content: "Percent"}
 			]},
 			{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", components: [
+				{name: "txtPercentDrain", className: "dashValue", flex: 1, content: "00"},
+				//{name: "lblVolts", className: "dashLabel", content: "Volts"}
+				{name: "lblPercentDrain", className: "dashLabel", content: "%/h"}
+			]},			
+			{kind: "VFlexBox", className: "dashContainer", flex: 1, align: "center", components: [
 				{name: "txtCurrent", className: "dashValue", flex: 1, content: "00"},
 				{name: "lblCurrent", className: "dashLabel", content: "Current"}
 			]},
@@ -37,6 +42,7 @@ enyo.kind({
 			]},
 			{kind: "VFlexBox", className: "dashContainerEnd", flex: 1, align: "center", onclick: "setStyles", components: [
 				{name: "txtVolts", className: "dashValue", flex: 1, content: "00"},
+				//{name: "lblVolts", className: "dashLabel", content: "Volts"}
 				{name: "lblVolts", className: "dashLabel", content: "Volts"}
 			]}
 		]},
@@ -44,7 +50,10 @@ enyo.kind({
 		{name: "screenState", kind: "enyo.PalmService", service: "palm://com.palm.display/control", method: "status", subscribe: true, onSuccess: "displayUpdate"},
 		{name: "batteryService", kind: "PalmService", service: "palm://de.somline.drbattery", method: "ReadBatteryShort", onSuccess: "gotBattStats"}
 	],
+	startTime: null,
+	startBatteryLevel: null,
 	create: function () {
+		this.startTime = (new Date()).getTime();
 		this.inherited(arguments);
 		this.$.screenState.call();
 		this.setStyles();
@@ -122,6 +131,24 @@ enyo.kind({
 			var batteryLevel = inResponse.getpercent;
 			this.$.txtPercent.setContent(batteryLevel);
 			this.$.batteryBar.applyStyle("width", batteryLevel + "%");
+			if (this.startBatteryLevel) {
+				var thisTime = (new Date()).getTime();
+				var durationSecs = (this.startTime - thisTime) / 1000;
+				var batteryLevel = inResponse.getpercent;
+				var batteryDrain = (this.startBatteryLevel - inResponse.getpercent) / durationSecs * 3600;
+				
+				faktor = Math.pow(10,1);
+				enyo.log(batteryDrain);
+				batteryDrain = Math.abs(Math.round(batteryDrain * faktor) / faktor);
+				enyo.log("rd " + batteryDrain);
+				
+				this.$.txtPercentDrain.setContent(batteryDrain);			
+			} else
+			{
+				var batteryLevel = inResponse.getpercent;
+				this.startBatteryLevel = inResponse.getpercent;
+				this.$.txtPercentDrain.setContent("-");				
+			}			
 		}
 		else {
 			this.$.txtPercent.setContent("?");
