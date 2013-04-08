@@ -42,7 +42,6 @@ enyo.kind({
 			]},
 			{kind: "VFlexBox", className: "dashContainerEnd", flex: 1, align: "center", onclick: "setStyles", components: [
 				{name: "txtVolts", className: "dashValue", flex: 1, content: "00"},
-				//{name: "lblVolts", className: "dashLabel", content: "Volts"}
 				{name: "lblVolts", className: "dashLabel", content: "Volts"}
 			]}
 		]},
